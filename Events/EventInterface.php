@@ -16,42 +16,42 @@ namespace Workerman\Events;
 interface EventInterface
 {
     /**
-     * Read event.
+     * Read event.读事件
      *
      * @var int
      */
     const EV_READ = 1;
 
     /**
-     * Write event.
+     * Write event.写事件
      *
      * @var int
      */
     const EV_WRITE = 2;
 
     /**
-     * Except event
+     * Except event. 带外事件
      *
      * @var int
      */
     const EV_EXCEPT = 3;
 
     /**
-     * Signal event.
+     * Signal event.信号事件
      *
      * @var int
      */
     const EV_SIGNAL = 4;
 
     /**
-     * Timer event.
+     * Timer event.周期定时任务
      *
      * @var int
      */
     const EV_TIMER = 8;
 
     /**
-     * Timer once event.
+     * Timer once event.一次定时任务
      *
      * @var int
      */

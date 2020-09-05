@@ -19,7 +19,7 @@ use Workerman\Worker;
 use \Exception;
 
 /**
- * AsyncTcpConnection.
+ * 异步TCP客户端连接。
  */
 class AsyncTcpConnection extends TcpConnection
 {

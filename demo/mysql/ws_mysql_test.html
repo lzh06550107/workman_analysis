@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>chatroom</title>
+</head>
+<body>
+<script type="text/javascript">
+    ws = new WebSocket("ws://127.0.0.1:8484");
+    ws.onopen = function(){
+        ws.send("触发查询");
+    }
+    ws.onmessage = function(e) {
+        alert("收到服务端的消息：" + e.data);
+    };
+</script>
+</body>
+</html>
+

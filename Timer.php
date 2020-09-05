@@ -76,6 +76,7 @@ class Timer
             return;
         }
         if (\function_exists('pcntl_signal')) {
+            // 安装一个处理时钟信号的处理器
             \pcntl_signal(\SIGALRM, array('\Workerman\Lib\Timer', 'signalHandle'), false);
         }
     }
@@ -88,18 +89,18 @@ class Timer
     public static function signalHandle()
     {
         if (!self::$_event) {
-            \pcntl_alarm(1);
+            \pcntl_alarm(1); // 为当前进程设置alarm闹钟信号
             self::tick();
         }
     }
 
     /**
-     * Add a timer.
+     * Add a timer.添加定时任务
      *
      * @param float    $time_interval
      * @param callable $func
      * @param mixed    $args
-     * @param bool     $persistent
+     * @param bool     $persistent 是否是持久的，如果只想定时执行一次，则传递false（只执行一次的任务在执行完毕后会自动销毁，不必调用Timer::del()）。默认是true，即一直定时执行。
      * @return int|bool
      */
     public static function add($time_interval, $func, $args = array(), $persistent = true)
@@ -113,7 +114,7 @@ class Timer
             $args = array();
         }
 
-        if (self::$_event) {
+        if (self::$_event) { // 如果存在事件循环，则使用它模拟定时器来执行任务
             return self::$_event->add($time_interval,
                 $persistent ? EventInterface::EV_TIMER : EventInterface::EV_TIMER_ONCE, $func, $args);
         }
@@ -147,13 +148,13 @@ class Timer
      */
     public static function tick()
     {
-        if (empty(self::$_tasks)) {
+        if (empty(self::$_tasks)) { // 如果没有任务，则不会发出alarm信号
             \pcntl_alarm(0);
             return;
         }
         $time_now = \time();
         foreach (self::$_tasks as $run_time => $task_data) {
-            if ($time_now >= $run_time) {
+            if ($time_now >= $run_time) { // 已经到达任务预定时间，则开始处理任务
                 foreach ($task_data as $index => $one_task) {
                     $task_func     = $one_task[0];
                     $task_args     = $one_task[1];

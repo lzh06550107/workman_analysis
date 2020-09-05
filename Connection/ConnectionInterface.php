@@ -24,7 +24,7 @@ abstract class  ConnectionInterface
      * @var array
      */
     public static $statistics = array(
-        'connection_count' => 0,
+        'connection_count' => 0, // 连接数
         'total_request'    => 0,
         'throw_exception'  => 0,
         'send_fail'        => 0,

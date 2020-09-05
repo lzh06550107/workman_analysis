@@ -55,19 +55,20 @@ class UdpConnection extends ConnectionInterface
     /**
      * Sends data on the connection.
      *
-     * @param string $send_buffer
-     * @param bool   $raw
+     * @param string $send_buffer 发送缓冲区
+     * @param bool   $raw 是否发送原始未编码的数据
      * @return void|boolean
      */
     public function send($send_buffer, $raw = false)
     {
-        if (false === $raw && $this->protocol) {
+        if (false === $raw && $this->protocol) { // 如果指定应用层协议且不发送原始数据
             $parser      = $this->protocol;
-            $send_buffer = $parser::encode($send_buffer, $this);
-            if ($send_buffer === '') {
+            $send_buffer = $parser::encode($send_buffer, $this); // 则需要编码
+            if ($send_buffer === '') { // 如果发送缓冲区为空，则不发送返回
                 return;
             }
         }
+        // TODO 难道返回的是发送成功的数据？？
         return \strlen($send_buffer) === \stream_socket_sendto($this->_socket, $send_buffer, 0, $this->_remoteAddress);
     }
 

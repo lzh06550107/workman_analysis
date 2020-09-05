@@ -24,7 +24,11 @@
         "source": "https://github.com/walkor/workerman"
     },
     "require": {
-        "php": ">=5.3"
+        "php": ">=5.3",
+        "workerman/globaldata": "dev-master",
+        "workerman/channel": "dev-master",
+        "workerman/mysql": "dev-master",
+        "workerman/http-client": "dev-master"
     },
     "suggest": {
         "ext-event": "For better performance. "
